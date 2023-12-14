@@ -1,10 +1,10 @@
 import re
-from subject import *
-from synonym import *
+from hackphasia.hackthing.subject import *
+from hackphasia.hackthing.synonym import *
 import json
 
 
-with open("dataset.json","r",encoding='utf-8') as f:
+with open("hackphasia/hackthing/dataset.json","r",encoding='utf-8') as f:
     dataset = json.load(f)
 
 
