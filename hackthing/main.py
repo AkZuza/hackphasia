@@ -40,3 +40,5 @@ def dataset_iterator(x):
 def abstracts(inp):
     vocab = derive_vocab(inp)
     return dataset_iterator(vocab)
+
+print(abstracts("what is a drone?"))
