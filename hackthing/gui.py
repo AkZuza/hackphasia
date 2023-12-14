@@ -28,13 +28,17 @@ for message in st.session_state.messages: # Display the prior chat messages
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            response = abstracts(prompt)
-            sequence = response
+            resp, title, url = abstracts(prompt)
+            sequence = resp
             inputs=tokenizer.encode("sumarize: " +sequence,return_tensors='pt', max_length=1024, truncation=True)
             output = model.generate(inputs, min_length=100, max_length=200)
             summary=tokenizer.decode(output[0])
             clean_text = re.sub(r'<[^>]+>', '', summary)
-            st.write(clean_text)
+            if title != None:
+                st.write(clean_text)
+                st.write(f"Most relevent patent: {title} URL: {url}")
+            else:
+                st.write(resp)
             message = {"role": "assistant", "content": clean_text}
             st.session_state.messages.append(message) # Add response to message history
 
