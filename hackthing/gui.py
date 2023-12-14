@@ -31,7 +31,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             response = abstracts(prompt)
             sequence = response
             inputs=tokenizer.encode("sumarize: " +sequence,return_tensors='pt', max_length=1024, truncation=True)
-            output = model.generate(inputs, min_length=80, max_length=100)
+            output = model.generate(inputs, min_length=100, max_length=200)
             summary=tokenizer.decode(output[0])
             clean_text = re.sub(r'<[^>]+>', '', summary)
             st.write(clean_text)
