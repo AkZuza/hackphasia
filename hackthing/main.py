@@ -41,7 +41,7 @@ def dataset_iterator(x):
         
     resp = dataset[l.index(max(l))]["Content"]
     title = dataset[l.index(max(l))]["Title"]
-    url = dataset[l.index(max(l))]["Url"]
+    url = dataset[l.index(max(l))]["Link"]
     to_ret = None
     if max(l) != 0:
         to_ret = (resp, title, url)
