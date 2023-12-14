@@ -1,10 +1,10 @@
 import re
-from hackphasia.hackthing.subject import *
-from hackphasia.hackthing.synonym import *
+from subject import *
+from synonym import *
 import json
 
 
-with open("hackphasia/hackthing/dataset.json","r",encoding='utf-8') as f:
+with open("dataset.json","r",encoding='utf-8') as f:
     dataset = json.load(f)
 
 
@@ -27,18 +27,23 @@ def derive_vocab(user_input):
 
 def dataset_iterator(x):
     s=''
+    l=[]
     for i in range(len(dataset)):
-        for j in dataset[i]["Content"].split():
-            if j in x:
+        counter=0
+        for j in x:
+            
+            if j in dataset[i]["Content"].split():
+                counter +=1
                 TITLE = dataset[i]["Title"]
                 CONTENT = (dataset[i]["Content"])
                 s += CONTENT + ' '
-    return s
+        l+=[counter]
+
+    return (dataset[l.index(max(l))]["Content"])
 
 
 
 def abstracts(inp):
     vocab = derive_vocab(inp)
-    return dataset_iterator(vocab)
-
-print(abstracts("what is a drone?"))
+    out = dataset_iterator(vocab)
+    return out
