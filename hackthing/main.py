@@ -42,7 +42,12 @@ def dataset_iterator(x):
     resp = dataset[l.index(max(l))]["Content"]
     title = dataset[l.index(max(l))]["Title"]
     url = dataset[l.index(max(l))]["Url"]
-    return (resp, title, url) if max(l) != 0: return "Beyond my vast immense knowledge", None, None
+    to_ret = None
+    if max(l) != 0:
+        to_ret = (resp, title, url)
+    else:
+        to_ret = ("Beyond my vast immense knowledge", None, None)
+    return to_ret
 
 
 
