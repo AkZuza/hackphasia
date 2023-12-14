@@ -38,8 +38,11 @@ def dataset_iterator(x):
                 CONTENT = (dataset[i]["Content"])
                 s += CONTENT + ' '
         l+=[counter]
-
-    return (dataset[l.index(max(l))]["Content"])
+        
+    resp = dataset[l.index(max(l))]["Content"]
+    title = dataset[l.index(max(l))]["Title"]
+    url = dataset[l.index(max(l))]["Url"]
+    return (resp, ) if max(l) != 0: return "Beyond my vast immense knowledge"
 
 
 
