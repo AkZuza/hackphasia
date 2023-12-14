@@ -1,6 +1,6 @@
 import re
-from subject import *
-from synonym import *
+from hackphasia.hackthing.subject import *
+from hackphasia.hackthing.synonym import *
 import json
 
 
