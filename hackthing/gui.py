@@ -1,5 +1,5 @@
 import streamlit as st
-from main import *
+from hackphasia.hackthing.main import *
 import torch
 from transformers import AutoTokenizer, AutoModelWithLMHead
 
