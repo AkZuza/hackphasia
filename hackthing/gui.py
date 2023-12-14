@@ -1,6 +1,10 @@
 import streamlit as st
 from main import *
+import torch
+from transformers import AutoTokenizer, AutoModelWithLMHead
 
+tokenizer=AutoTokenizer.from_pretrained('T5-base')
+model=AutoModelWithLMHead.from_pretrained('T5-base', return_dict=True)
 st.title("Tara")
 st.subheader("Introducing a low code and robust semantic NLP engine")
 
@@ -9,7 +13,7 @@ st.info("Tara is a low resource consuming NLP engine that let's you perform vari
 
 if "messages" not in st.session_state.keys(): # Initialize the chat messages history
     st.session_state.messages = [
-        {"role": "assistant", "content": "Ask me a question about Streamlit's open-source Python library!"}
+        {"role": "assistant", "content": "Use me to generate ideas about drones based on around 2.5k drone based patents!"}
     ]
 
 if prompt := st.chat_input("Your question"): # Prompt for user input and save to chat history
@@ -25,6 +29,15 @@ if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = abstracts(prompt)
-            st.write(response)
-            message = {"role": "assistant", "content": response[:200]}
+            sequence = response
+            inputs=tokenizer.encode("sumarize: " +sequence,return_tensors='pt', max_length=1024, truncation=True)
+            output = model.generate(inputs, min_length=80, max_length=100)
+            summary=tokenizer.decode(output[0])
+            clean_text = re.sub(r'<[^>]+>', '', summary)
+            st.write(clean_text)
+            message = {"role": "assistant", "content": clean_text}
             st.session_state.messages.append(message) # Add response to message history
+
+
+
+
